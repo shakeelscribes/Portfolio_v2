@@ -1,0 +1,172 @@
+@import "tailwindcss";
+@import "@fontsource-variable/jetbrains-mono";
+
+/* Self-hosted display + body faces (Fontshare, free license) */
+@font-face {
+  font-family: "Clash Display";
+  src: url("/fonts/clash-display-500.woff2") format("woff2"),
+    url("/fonts/clash-display-500.woff") format("woff");
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Clash Display";
+  src: url("/fonts/clash-display-600.woff2") format("woff2"),
+    url("/fonts/clash-display-600.woff") format("woff");
+  font-weight: 600;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Satoshi";
+  src: url("/fonts/satoshi-400.woff2") format("woff2"),
+    url("/fonts/satoshi-400.woff") format("woff");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Satoshi";
+  src: url("/fonts/satoshi-500.woff2") format("woff2"),
+    url("/fonts/satoshi-500.woff") format("woff");
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Satoshi";
+  src: url("/fonts/satoshi-700.woff2") format("woff2"),
+    url("/fonts/satoshi-700.woff") format("woff");
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+@theme {
+  /* Light is the primary mode; dark swaps every token under [data-theme="dark"].
+     One accent family: chartreuse fills, olive ink for accent text on light. */
+  --color-bg: #f4f4f2;
+  --color-raised: #ebebe8;
+  --color-elevated: #dfdfdb;
+  --color-ink: #151513;
+  --color-dim: #565652;
+  --color-faint: #8f8f89;
+  --color-accent: #ccf544;
+  --color-accent-ink: #5c6d00;
+  --color-on-accent: #16160f;
+  --color-line: #d9d9d4;
+
+  --font-display: "Clash Display", "Satoshi", system-ui, sans-serif;
+  --font-body: "Satoshi", system-ui, sans-serif;
+  --font-mono: "JetBrains Mono Variable", ui-monospace, "SF Mono", monospace;
+
+  --animate-marquee: marquee 42s linear infinite;
+
+  @keyframes marquee {
+    to {
+      transform: translateX(-50%);
+    }
+  }
+}
+
+html {
+  color-scheme: light;
+  scroll-behavior: smooth;
+  scroll-padding-top: 96px;
+}
+
+/* Dark mode: full token swap on the root attribute. Unlayered rules beat
+   the layered @theme defaults, so these win without !important. */
+[data-theme="dark"] {
+  color-scheme: dark;
+  --color-bg: #0b0b0c;
+  --color-raised: #131315;
+  --color-elevated: #1a1a1d;
+  --color-ink: #f2f2ef;
+  --color-dim: #a2a2aa;
+  --color-faint: #66666e;
+  --color-line: #232327;
+  --color-accent-ink: #ccf544;
+}
+/* Theme switch is instant at the token level; browsers that support the
+   View Transitions API get a compositor-driven cross-fade instead of
+   per-element CSS transitions (which jank on large pages). */
+
+body {
+  background: var(--color-bg);
+  color: var(--color-ink);
+  font-family: var(--font-body);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  overflow-x: clip;
+}
+
+/* Film grain, fixed and non-interactive so it never repaints on scroll */
+body::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: 80;
+  pointer-events: none;
+  opacity: 0.05;
+  mix-blend-mode: overlay;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+::selection {
+  background: var(--color-accent);
+  color: #0b0b0c;
+}
+
+/* Inside the inverted lime contact block, flip selection back */
+#contact ::selection {
+  background: #0b0b0c;
+  color: var(--color-accent);
+}
+
+:focus-visible {
+  outline: 2px solid var(--color-accent-ink);
+  outline-offset: 3px;
+  border-radius: 2px;
+}
+
+::-webkit-scrollbar {
+  width: 10px;
+}
+::-webkit-scrollbar-track {
+  background: var(--color-bg);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--color-elevated);
+  border-radius: 999px;
+  border: 2px solid var(--color-bg);
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--color-faint);
+}
+
+/* Shape system (documented): buttons pill, media 16px, chips 8px */
+
+@keyframes float-soft {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
+.animate-float-soft {
+  animation: float-soft 7s ease-in-out infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  .animate-marquee,
+  .animate-float-soft {
+    animation: none;
+  }
+}

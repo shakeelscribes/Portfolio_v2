@@ -1,0 +1,12 @@
+# Normalise line endings: this repo is developed on Windows but built on Linux
+# (Vercel). Without this, CRLF from a Windows checkout lands in the deployed
+# bundle and shows up as spurious diffs.
+* text=auto eol=lf
+
+# Binary assets must never be touched.
+*.woff  binary
+*.woff2 binary
+*.pdf   binary
+*.png   binary
+*.jpg   binary
+*.svg   text

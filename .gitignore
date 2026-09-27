@@ -1,0 +1,52 @@
+# dependencies
+/node_modules
+
+# next.js
+/.next/
+/out/
+next-env.d.ts
+
+# production
+/build
+
+# misc
+.DS_Store
+*.pem
+
+# debug
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# env files
+.env*
+!.env.example
+
+# vercel
+.vercel
+
+# local verification artifacts (Playwright runs, layout regression checks).
+# Kept on disk for iteration, never published.
+/.analysis/
+/.playwright-mcp/
+/server.log
+
+# one-off verification scripts written during development, listed by name so
+# postcss.config.mjs and next.config.ts stay tracked.
+/a11y.mjs
+/analyze.mjs
+/blindtest.mjs
+/burst.mjs
+/final.mjs
+/heights.mjs
+/navcheck.mjs
+/navshot.mjs
+/overlap.mjs
+/seam.mjs
+/shots-dual.mjs
+/verify.mjs
+
+# personal agent tooling and skill locks, not part of the site
+/.agents/
+/.claude/
+/skills-lock.json
